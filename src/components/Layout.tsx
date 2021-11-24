@@ -29,8 +29,8 @@ const Layout: FC = ({ children }) => (
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				justifyContent: 'center',
 				alignItems: 'center',
+				marginTop: '5rem',
 				height: '100vh',
 				pt: 8,
 				gap: 2
