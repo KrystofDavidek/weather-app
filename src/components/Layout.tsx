@@ -30,7 +30,7 @@ const Layout: FC = ({ children }) => (
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
-				marginTop: '5rem',
+				mt: '5rem',
 				height: '100vh',
 				pt: 8,
 				gap: 2

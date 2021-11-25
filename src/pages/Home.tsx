@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import WeatherCard from '../components/WeatherCard';
 import { fetcher } from '../utils/fetcher';
+import { toCurrentWeatherData } from '../utils/mapper';
 
 const Home = () => {
 	const [input, setInput] = useState<string>('');
@@ -41,11 +42,11 @@ const Home = () => {
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
-				width: '80%'
+				width: '90%'
 			}}
 		>
 			<TextField
-				sx={{ width: '70%', marginBottom: '3rem' }}
+				sx={{ width: '70%', mb: '3rem' }}
 				id="outlined-helperText"
 				label="City"
 				helperText="search by city name"
@@ -62,7 +63,7 @@ const Home = () => {
 					)
 				}}
 			/>
-			{data && <WeatherCard data={data} />}
+			{data && <WeatherCard data={toCurrentWeatherData(data)} />}
 		</Box>
 	);
 };
