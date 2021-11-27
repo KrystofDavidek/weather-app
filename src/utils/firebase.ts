@@ -7,6 +7,11 @@ import {
 	onAuthStateChanged,
 	User
 } from 'firebase/auth';
+import {
+	collection,
+	CollectionReference,
+	getFirestore
+} from 'firebase/firestore';
 
 initializeApp({
 	apiKey: 'AIzaSyDhn5WXyYywLc4-6aJCIQjBzZNda_TMRpg',
@@ -32,3 +37,16 @@ export const signOut = () => authSignOut(auth);
 // Subscribe to auth state changes
 export const onAuthChanged = (callback: (u: User | null) => void) =>
 	onAuthStateChanged(auth, callback);
+
+// Firestore database
+const db = getFirestore();
+
+export type UserLocations = {
+	user: string;
+	locations: [];
+};
+
+export const userLocationsCollection = collection(
+	db,
+	'userLocations'
+) as CollectionReference<UserLocations>;
