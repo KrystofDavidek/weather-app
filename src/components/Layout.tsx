@@ -24,14 +24,11 @@ const Layout: FC = ({ children }) => (
 
 		{/* Main content container */}
 		<Container
-			maxWidth="sm"
 			component="main"
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				alignItems: 'center',
 				mt: '5rem',
-				height: '100vh',
 				pt: 8,
 				gap: 2
 			}}
