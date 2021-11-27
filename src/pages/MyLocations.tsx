@@ -1,3 +1,3 @@
-const MyLocations = () => <div>My Locations</div>;
+const MyLocations = () => <div>My locations</div>;
 
 export default MyLocations;
