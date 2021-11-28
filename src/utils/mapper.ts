@@ -1,5 +1,6 @@
 import { CurrentWeatherData } from './../models/weather';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const toCurrentWeatherData = (data: any): CurrentWeatherData => ({
 	name: data.location.name,
 	country: data.location.country,
