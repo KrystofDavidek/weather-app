@@ -1,16 +1,23 @@
 import useSWR from 'swr';
-import { TextField, Box, IconButton } from '@mui/material';
-import { SearchOutlined, CloseOutlined } from '@mui/icons-material';
+import { TextField, Box, IconButton, Typography } from '@mui/material';
+import {
+	SearchOutlined,
+	CloseOutlined,
+	LocationSearching
+} from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 
 import WeatherCard from '../components/WeatherCard';
 import { fetcher } from '../utils/fetcher';
 import { CurrentWeatherType } from '../models/weather';
+import useCurrentPosition from '../hooks/useCurrentPosition';
 
 const Home = () => {
 	const [input, setInput] = useState<string>('');
 	const [location, setLocation] = useState<string>('');
+	const [gpsError, setGpsError] = useState<boolean>(false);
+	const { position, error } = useCurrentPosition();
 	const navigate = useNavigate();
 	const { paramLocation } = useParams();
 
@@ -20,8 +27,19 @@ const Home = () => {
 		{ shouldRetryOnError: false, revalidateOnFocus: false }
 	);
 
-	const search = () => {
-		setLocation(input);
+	console.log(data?.current.condition);
+
+	const search = (isfromGps?: boolean) => {
+		setGpsError(false);
+		if (isfromGps) {
+			if (position.latitude !== 0 && position.longitude !== 0) {
+				setLocation(`${position.latitude},${position.longitude}`);
+			} else {
+				setGpsError(true);
+			}
+		} else {
+			setLocation(input);
+		}
 	};
 
 	const close = () => {
@@ -54,6 +72,12 @@ const Home = () => {
 				width: '100%'
 			}}
 		>
+			{gpsError && (
+				<Typography color="red" mb={2}>
+					Problem with location, click on location icon again.
+				</Typography>
+			)}
+
 			<TextField
 				sx={{ width: '70%', mb: '3rem' }}
 				id="outlined-helperText"
@@ -66,14 +90,23 @@ const Home = () => {
 				onKeyDown={handleKeyDown}
 				InputProps={{
 					startAdornment: (
-						<IconButton onClick={search}>
-							<SearchOutlined />
+						<IconButton onClick={() => search(true)}>
+							<LocationSearching />
 						</IconButton>
 					),
 					endAdornment: (
-						<IconButton onClick={close}>
-							<CloseOutlined />
-						</IconButton>
+						<Box
+							sx={{
+								display: 'flex'
+							}}
+						>
+							<IconButton onClick={() => search}>
+								<SearchOutlined />
+							</IconButton>
+							<IconButton onClick={close}>
+								<CloseOutlined />
+							</IconButton>
+						</Box>
 					)
 				}}
 			/>
