@@ -7,6 +7,7 @@ import {
 	Grid
 } from '@mui/material';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 import { CurrentWeatherData } from '../models/weather';
 
@@ -40,7 +41,12 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => (
 					<Typography variant="h6" component="span">
 						Wind direction is {data.wind_dir}
 					</Typography>
-					<Button sx={{ width: '70%', mt: '2rem' }} variant="outlined">
+					<Button
+						component={Link}
+						sx={{ width: '70%', mt: '2rem' }}
+						variant="outlined"
+						to={`/forecast/${data.name}`}
+					>
 						Show forecast
 					</Button>
 				</Grid>

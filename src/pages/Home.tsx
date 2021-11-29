@@ -38,11 +38,13 @@ const Home = () => {
 
 	return (
 		<Box
+			maxWidth="sm"
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
-				width: '90%'
+				alignSelf: 'center',
+				width: '100%'
 			}}
 		>
 			<TextField
