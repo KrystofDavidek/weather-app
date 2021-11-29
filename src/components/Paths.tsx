@@ -8,7 +8,8 @@ const Paths = () => {
 	const user = useUserContext();
 	return (
 		<Routes>
-			<Route path="/" element={<Home />} />
+			<Route path="*" element={<Home />} />
+			<Route path="/:paramLocation" element={<Home />} />
 			<Route path="/my-locations" element={<MyLocations />} />
 			{user ? (
 				<Route path="/settings" element={<Settings />} />
@@ -20,4 +21,5 @@ const Paths = () => {
 		</Routes>
 	);
 };
+
 export default Paths;

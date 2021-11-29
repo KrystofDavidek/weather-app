@@ -1,34 +1,41 @@
 import useSWR from 'swr';
 import { TextField, Box, IconButton } from '@mui/material';
-import { SearchOutlined } from '@mui/icons-material';
+import { SearchOutlined, CloseOutlined } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router';
 
 import WeatherCard from '../components/WeatherCard';
 import { fetcher } from '../utils/fetcher';
-import { toCurrentWeatherData } from '../utils/mapper';
+import { CurrentWeatherType } from '../models/weather';
 
 const Home = () => {
 	const [input, setInput] = useState<string>('');
 	const [location, setLocation] = useState<string>('');
-	const [shouldFetch, setShouldFetch] = useState<boolean>(false);
+	const navigate = useNavigate();
+	const { paramLocation } = useParams();
 
-	const { data, error } = useSWR(
-		shouldFetch
-			? `current.json?key=${process.env.REACT_APP_API_KEY}&q=${location}&aqi=no`
-			: null,
-		fetcher
+	const { data } = useSWR<CurrentWeatherType>(
+		`current.json?key=${process.env.REACT_APP_API_KEY}&q=${location}&aqi=no`,
+		fetcher,
+		{ shouldRetryOnError: false, revalidateOnFocus: false }
 	);
 
 	const search = () => {
 		setLocation(input);
-		setShouldFetch(true);
+	};
+
+	const close = () => {
+		setInput('');
+		setLocation('');
+		navigate('/');
 	};
 
 	useEffect(() => {
-		if (error !== undefined) {
-			setShouldFetch(false);
+		if (paramLocation) {
+			setInput(paramLocation);
+			setLocation(paramLocation);
 		}
-	}, [error]);
+	}, [paramLocation]);
 
 	const handleKeyDown = (event: { key: string }) => {
 		if (event.key === 'Enter') {
@@ -58,14 +65,19 @@ const Home = () => {
 				}}
 				onKeyDown={handleKeyDown}
 				InputProps={{
-					endAdornment: (
+					startAdornment: (
 						<IconButton onClick={search}>
 							<SearchOutlined />
+						</IconButton>
+					),
+					endAdornment: (
+						<IconButton onClick={close}>
+							<CloseOutlined />
 						</IconButton>
 					)
 				}}
 			/>
-			{data && <WeatherCard data={toCurrentWeatherData(data)} />}
+			{data && <WeatherCard data={data} />}
 		</Box>
 	);
 };
