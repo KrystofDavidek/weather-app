@@ -41,7 +41,7 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
 							onClick={() => setActiveStar(!activeStar)}
 							sx={{ ml: 'auto' }}
 						>
-							{activeStar ? <StarOutline /> : <Star />}
+							{activeStar ? <Star /> : <StarOutline />}
 						</IconButton>
 					</Grid>
 

@@ -17,7 +17,7 @@ const Home = () => {
 	const [input, setInput] = useState<string>('');
 	const [location, setLocation] = useState<string>('');
 	const [gpsError, setGpsError] = useState<boolean>(false);
-	const { position, error } = useCurrentPosition();
+	const { position } = useCurrentPosition();
 	const navigate = useNavigate();
 	const { paramLocation } = useParams();
 
