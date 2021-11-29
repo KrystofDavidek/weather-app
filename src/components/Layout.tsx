@@ -18,7 +18,13 @@ const Layout: FC = ({ children }) => {
 	const user = useUserContext();
 
 	return (
-		<Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+		<Box
+			sx={{
+				height: '100vh',
+				display: 'flex',
+				flexDirection: 'column'
+			}}
+		>
 			<AppBar position="fixed">
 				<Container maxWidth="sm">
 					<Toolbar disableGutters sx={{ gap: 2 }}>
@@ -64,7 +70,7 @@ const Layout: FC = ({ children }) => {
 			>
 				{children}
 			</Container>
-			<Typography component="div">
+			<Typography component="div" sx={{ mt: 'auto' }}>
 				Powered by{' '}
 				<a href="https://www.weatherapi.com/" title="Free Weather API">
 					WeatherAPI.com

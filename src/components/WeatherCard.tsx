@@ -4,11 +4,13 @@ import {
 	Typography,
 	Button,
 	CardMedia,
-	Grid
+	Grid,
+	IconButton
 } from '@mui/material';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
+import { StarOutline, Star } from '@mui/icons-material';
 
 import { CurrentWeatherType } from '../models/weather';
 
@@ -17,6 +19,7 @@ type WeatherProps = {
 };
 
 const WeatherCard: FC<WeatherProps> = ({ data }) => {
+	const [activeStar, setActiveStar] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -34,6 +37,12 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
 						<Typography component="span" color="grey">
 							{data.location.localtime}
 						</Typography>
+						<IconButton
+							onClick={() => setActiveStar(!activeStar)}
+							sx={{ ml: 'auto' }}
+						>
+							{activeStar ? <StarOutline /> : <Star />}
+						</IconButton>
 					</Grid>
 
 					<Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column' }}>

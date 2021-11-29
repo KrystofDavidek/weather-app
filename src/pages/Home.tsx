@@ -27,8 +27,6 @@ const Home = () => {
 		{ shouldRetryOnError: false, revalidateOnFocus: false }
 	);
 
-	console.log(data?.current.condition);
-
 	const search = (isfromGps?: boolean) => {
 		setGpsError(false);
 		if (isfromGps) {
