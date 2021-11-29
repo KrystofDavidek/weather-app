@@ -84,7 +84,7 @@ const Forecast = () => {
 					justifyContent="space-between"
 				>
 					<Grid item>
-						<Typography sx={{ fontSize: 26 }}>Brno</Typography>
+						<Typography sx={{ fontSize: 26 }}>{data.location.name}</Typography>
 					</Grid>
 					<Grid item>
 						<FormControl>
