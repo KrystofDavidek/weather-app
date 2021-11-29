@@ -41,12 +41,15 @@ export const onAuthChanged = (callback: (u: User | null) => void) =>
 // Firestore database
 const db = getFirestore();
 
-export type UserLocations = {
-	user: string;
+export type UserData = {
+	userEmail: string;
+	userName?: string;
 	locations: [];
+	degreesUnit: string;
+	speedUnit: string;
 };
 
-export const userLocationsCollection = collection(
+export const userDataCollection = collection(
 	db,
-	'userLocations'
-) as CollectionReference<UserLocations>;
+	'userData'
+) as CollectionReference<UserData>;
