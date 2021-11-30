@@ -65,7 +65,7 @@ const Forecast = () => {
 	};
 
 	return (
-		<Box sx={{ my: '2rem' }}>
+		<Box sx={{ mb: '2rem' }}>
 			<Grid container alignItems="center" gap={1}>
 				<Grid item>
 					<Typography
