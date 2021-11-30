@@ -29,7 +29,7 @@ const auth = getAuth();
 export const signUp = (email: string, password: string) =>
 	createUserWithEmailAndPassword(auth, email, password);
 
-export const signIn = (email: string, password: string) =>
+export const logIn = (email: string, password: string) =>
 	signInWithEmailAndPassword(auth, email, password);
 
 export const signOut = () => authSignOut(auth);
@@ -41,12 +41,15 @@ export const onAuthChanged = (callback: (u: User | null) => void) =>
 // Firestore database
 const db = getFirestore();
 
-export type UserLocations = {
-	user: string;
+export type UserData = {
+	userEmail: string;
+	userName?: string;
 	locations: [];
+	degreesUnit: string;
+	speedUnit: string;
 };
 
-export const userLocationsCollection = collection(
+export const userDataCollection = collection(
 	db,
-	'userLocations'
-) as CollectionReference<UserLocations>;
+	'userData'
+) as CollectionReference<UserData>;
