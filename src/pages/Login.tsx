@@ -38,7 +38,6 @@ const Login = () => {
 					onSubmit={async (e: FormEvent) => {
 						e.preventDefault();
 						try {
-							console.log(email, password);
 							isLogin
 								? await logIn(email, password)
 								: await signUp(email, password);
