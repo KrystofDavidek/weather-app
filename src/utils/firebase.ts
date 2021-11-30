@@ -44,9 +44,9 @@ const db = getFirestore();
 export type UserData = {
 	userEmail: string;
 	userName?: string;
-	locations: [];
-	degreesUnit: string;
-	speedUnit: string;
+	locations: string[];
+	degreesUnit: 'celsius' | 'fahrenheit';
+	speedUnit: 'kilometers' | 'miles';
 };
 
 export const userDataCollection = collection(
