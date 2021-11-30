@@ -31,9 +31,15 @@ const Layout: FC = ({ children }) => {
 						<Button component={Link} to="/" sx={{ color: 'white' }}>
 							Find location
 						</Button>
-						<Button component={Link} to="/my-locations" sx={{ color: 'white' }}>
-							My locations
-						</Button>
+						{user && (
+							<Button
+								component={Link}
+								to="/my-locations"
+								sx={{ color: 'white' }}
+							>
+								My locations
+							</Button>
+						)}
 						<Box sx={{ flexGrow: 1 }} />
 						{user ? (
 							<>
@@ -47,7 +53,6 @@ const Layout: FC = ({ children }) => {
 								<Button onClick={signOut} sx={{ color: 'white' }}>
 									Logout
 								</Button>
-								{console.log(user)}
 							</>
 						) : (
 							<Button component={Link} to="/login" sx={{ color: 'white' }}>

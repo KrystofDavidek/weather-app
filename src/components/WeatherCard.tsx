@@ -7,9 +7,8 @@ import {
 	Grid,
 	IconButton
 } from '@mui/material';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router';
 import { StarOutline, Star } from '@mui/icons-material';
 
 import { CurrentWeatherType } from '../models/weather';
@@ -20,11 +19,6 @@ type WeatherProps = {
 
 const WeatherCard: FC<WeatherProps> = ({ data }) => {
 	const [activeStar, setActiveStar] = useState(false);
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		navigate(`/${data.location.name}`);
-	}, []);
 
 	return (
 		<Card sx={{ width: '100%', p: '1rem', boxShadow: 3 }}>
