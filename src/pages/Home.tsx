@@ -5,8 +5,8 @@ import {
 	CloseOutlined,
 	LocationSearching
 } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import WeatherCard from '../components/WeatherCard';
 import { fetcher } from '../utils/fetcher';
@@ -15,14 +15,15 @@ import useCurrentPosition from '../hooks/useCurrentPosition';
 
 const Home = () => {
 	const [input, setInput] = useState<string>('');
-	const [location, setLocation] = useState<string>('');
 	const [gpsError, setGpsError] = useState<boolean>(false);
 	const { position } = useCurrentPosition();
 	const navigate = useNavigate();
 	const { paramLocation } = useParams();
 
 	const { data } = useSWR<CurrentWeatherType>(
-		`current.json?key=${process.env.REACT_APP_API_KEY}&q=${location}&aqi=no`,
+		paramLocation
+			? `current.json?key=${process.env.REACT_APP_API_KEY}&q=${paramLocation}&aqi=no`
+			: null,
 		fetcher,
 		{ shouldRetryOnError: false, revalidateOnFocus: false }
 	);
@@ -31,27 +32,19 @@ const Home = () => {
 		setGpsError(false);
 		if (isfromGps) {
 			if (position.latitude !== 0 && position.longitude !== 0) {
-				setLocation(`${position.latitude},${position.longitude}`);
+				navigate(`${position.latitude},${position.longitude}`);
 			} else {
 				setGpsError(true);
 			}
 		} else {
-			setLocation(input);
+			navigate(`/${input}`);
 		}
 	};
 
 	const close = () => {
 		setInput('');
-		setLocation('');
 		navigate('/');
 	};
-
-	useEffect(() => {
-		if (paramLocation) {
-			setInput(paramLocation);
-			setLocation(paramLocation);
-		}
-	}, [paramLocation]);
 
 	const handleKeyDown = (event: { key: string }) => {
 		if (event.key === 'Enter') {
@@ -98,7 +91,7 @@ const Home = () => {
 								display: 'flex'
 							}}
 						>
-							<IconButton onClick={() => search}>
+							<IconButton onClick={() => search()}>
 								<SearchOutlined />
 							</IconButton>
 							<IconButton onClick={close}>
