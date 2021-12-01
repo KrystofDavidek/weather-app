@@ -18,6 +18,7 @@ export const UserProvider: FC = ({ children }) => {
 
 	useEffect(() => {
 		if (!user?.email) {
+			setUserData(undefined);
 			return;
 		}
 		const unsubscribe = onSnapshot(userDataDocument(user.email), snapshot => {

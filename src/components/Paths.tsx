@@ -10,9 +10,11 @@ const Paths = () => {
 		<Routes>
 			<Route path="/" element={<Home />} />
 			<Route path="/:paramLocation" element={<Home />} />
-			<Route path="/my-locations" element={<MyLocations />} />
 			{user ? (
-				<Route path="/settings" element={<Settings />} />
+				<>
+					<Route path="/my-locations" element={<MyLocations />} />
+					<Route path="/settings" element={<Settings />} />
+				</>
 			) : (
 				<Route path="/login" element={<Login />} />
 			)}

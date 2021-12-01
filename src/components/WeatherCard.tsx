@@ -7,7 +7,8 @@ import {
 	CardMedia,
 	Grid,
 	IconButton,
-	Divider
+	Divider,
+	Tooltip
 } from '@mui/material';
 import { FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
@@ -29,7 +30,7 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
 	const { user, userData } = useUserContext();
 	const activeStar = useMemo(
 		() => userData?.locations.includes(data.location.name),
-		[userData]
+		[userData, data.location.name]
 	);
 
 	const handleClick = async () => {
@@ -49,9 +50,13 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
 					<DragIndicator sx={{ color: grey[600], cursor: 'pointer' }} />
 				</Box>
 				{user && (
-					<IconButton onClick={handleClick}>
-						{activeStar ? <Star /> : <StarOutline />}
-					</IconButton>
+					<Tooltip
+						title={activeStar ? 'Remove from favorites' : 'Add to favorites'}
+					>
+						<IconButton onClick={handleClick}>
+							{activeStar ? <Star /> : <StarOutline />}
+						</IconButton>
+					</Tooltip>
 				)}
 			</Box>
 			<Divider />
