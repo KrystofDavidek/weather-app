@@ -9,7 +9,10 @@ import {
 } from 'firebase/auth';
 import {
 	collection,
+	doc,
+	setDoc,
 	CollectionReference,
+	DocumentReference,
 	getFirestore
 } from 'firebase/firestore';
 
@@ -26,8 +29,18 @@ initializeApp({
 // Authentication
 const auth = getAuth();
 
-export const signUp = (email: string, password: string) =>
-	createUserWithEmailAndPassword(auth, email, password);
+export const signUp = async (email: string, password: string) => {
+	const { user } = await createUserWithEmailAndPassword(auth, email, password);
+	if (!user.email) {
+		return;
+	}
+	await setDoc(userDataDocument(user.email), {
+		userEmail: user.email,
+		locations: [],
+		degreesUnit: 'celsius',
+		speedUnit: 'kilometers'
+	});
+};
 
 export const logIn = (email: string, password: string) =>
 	signInWithEmailAndPassword(auth, email, password);
@@ -53,3 +66,6 @@ export const userDataCollection = collection(
 	db,
 	'userData'
 ) as CollectionReference<UserData>;
+
+export const userDataDocument = (email: string) =>
+	doc(db, 'userData', email) as DocumentReference<UserData>;

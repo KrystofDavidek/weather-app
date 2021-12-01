@@ -9,11 +9,14 @@ import {
 	IconButton,
 	Divider
 } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC, useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { grey } from '@mui/material/colors';
 import { StarOutline, Star, DragIndicator } from '@mui/icons-material';
+import { arrayUnion, arrayRemove, updateDoc } from 'firebase/firestore';
 
+import useUserContext from '../hooks/useUserContext';
+import { userDataDocument } from '../utils/firebase';
 import { CurrentWeatherType } from '../models/weather';
 
 import LabeledItem from './LabeledItem';
@@ -23,7 +26,21 @@ type WeatherProps = {
 };
 
 const WeatherCard: FC<WeatherProps> = ({ data }) => {
-	const [activeStar, setActiveStar] = useState(false);
+	const { user, userData } = useUserContext();
+	const activeStar = useMemo(
+		() => userData?.locations.includes(data.location.name),
+		[userData]
+	);
+
+	const handleClick = async () => {
+		if (!user?.email) {
+			return;
+		}
+		const action = activeStar ? arrayRemove : arrayUnion;
+		await updateDoc(userDataDocument(user.email), {
+			locations: action(data.location.name)
+		});
+	};
 
 	return (
 		<Card sx={{ width: '100%', p: '1rem', pt: 0, boxShadow: 3 }}>
@@ -31,9 +48,11 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
 				<Box sx={{ display: 'grid', placeItems: 'center' }}>
 					<DragIndicator sx={{ color: grey[600], cursor: 'pointer' }} />
 				</Box>
-				<IconButton onClick={() => setActiveStar(previous => !previous)}>
-					{activeStar ? <Star /> : <StarOutline />}
-				</IconButton>
+				{user && (
+					<IconButton onClick={handleClick}>
+						{activeStar ? <Star /> : <StarOutline />}
+					</IconButton>
+				)}
 			</Box>
 			<Divider />
 			<CardContent>
