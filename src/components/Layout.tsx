@@ -15,7 +15,7 @@ import useUserContext from '../hooks/useUserContext';
 import { signOut } from '../utils/firebase';
 
 const Layout: FC = ({ children }) => {
-	const user = useUserContext();
+	const { user } = useUserContext();
 
 	return (
 		<Box

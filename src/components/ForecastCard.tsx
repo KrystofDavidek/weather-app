@@ -20,7 +20,7 @@ const ForecastCard = ({ data }: Props) => (
 			</Grid>
 			<Grid item xs={6} sm={4} md={2}>
 				<Grid container alignItems="center" gap={1}>
-					<Grid item>
+					<Grid item sx={{ display: 'grid', placeItems: 'center' }}>
 						<img
 							style={{ height: 42, width: 'auto' }}
 							src={data.condition.icon}

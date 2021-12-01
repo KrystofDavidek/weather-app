@@ -5,7 +5,7 @@ import { Home, MyLocations, Login, Forecast, NotFound } from '../pages';
 import Settings from '../pages/Settings';
 
 const Paths = () => {
-	const user = useUserContext();
+	const { user } = useUserContext();
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
