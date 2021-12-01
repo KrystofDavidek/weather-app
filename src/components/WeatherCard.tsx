@@ -9,7 +9,7 @@ import {
 	IconButton,
 	Divider
 } from '@mui/material';
-import { FC, useState, useEffect, useRef, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { grey } from '@mui/material/colors';
 import { StarOutline, Star, DragIndicator } from '@mui/icons-material';
