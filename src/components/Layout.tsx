@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { FC } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FC, useCallback } from 'react';
 import {
 	AppBar,
 	Container,
@@ -15,7 +15,13 @@ import useUserContext from '../hooks/useUserContext';
 import { signOut } from '../utils/firebase';
 
 const Layout: FC = ({ children }) => {
-	const user = useUserContext();
+	const { user } = useUserContext();
+	const navigate = useNavigate();
+
+	const handleSignOut = useCallback(async () => {
+		await signOut();
+		navigate('/login');
+	}, []);
 
 	return (
 		<Box
@@ -50,7 +56,7 @@ const Layout: FC = ({ children }) => {
 								>
 									<SettingsIcon />
 								</IconButton>
-								<Button onClick={signOut} sx={{ color: 'white' }}>
+								<Button onClick={handleSignOut} sx={{ color: 'white' }}>
 									Logout
 								</Button>
 							</>

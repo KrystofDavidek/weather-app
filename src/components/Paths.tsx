@@ -5,14 +5,16 @@ import { Home, MyLocations, Login, Forecast, NotFound } from '../pages';
 import Settings from '../pages/Settings';
 
 const Paths = () => {
-	const user = useUserContext();
+	const { user } = useUserContext();
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
 			<Route path="/:paramLocation" element={<Home />} />
-			<Route path="/my-locations" element={<MyLocations />} />
 			{user ? (
-				<Route path="/settings" element={<Settings />} />
+				<>
+					<Route path="/my-locations" element={<MyLocations />} />
+					<Route path="/settings" element={<Settings />} />
+				</>
 			) : (
 				<Route path="/login" element={<Login />} />
 			)}

@@ -18,7 +18,7 @@ const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const [isLogin, setLogin] = useState(false);
+	const [isLogin, setLogin] = useState(true);
 	const [submitError, setSubmitError] = useState<string>();
 
 	const toggleLogin = () => setLogin(value => !value);

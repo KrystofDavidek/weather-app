@@ -14,6 +14,7 @@ import { useParams } from 'react-router';
 import useSWR from 'swr';
 import { format, addDays } from 'date-fns';
 
+import PageTitle from '../components/PageTitle';
 import ForecastCard from '../components/ForecastCard';
 import { ForecastType } from '../models/forecast';
 import { fetcher } from '../utils/fetcher';
@@ -65,16 +66,10 @@ const Forecast = () => {
 	};
 
 	return (
-		<Box sx={{ my: '2rem' }}>
+		<Box sx={{ mb: '2rem' }}>
 			<Grid container alignItems="center" gap={1}>
 				<Grid item>
-					<Typography
-						variant="h1"
-						sx={{ fontSize: 42, fontWeight: 500 }}
-						color="GrayText"
-					>
-						Hourly forecast
-					</Typography>
+					<PageTitle title="Hourly forecast" />
 				</Grid>
 				<Grid
 					item
