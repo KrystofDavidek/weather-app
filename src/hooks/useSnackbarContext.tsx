@@ -4,9 +4,10 @@ import {
 	useCallback,
 	useState,
 	useMemo,
-	useContext
+	useContext,
+	SyntheticEvent
 } from 'react';
-import { Snackbar, Alert } from '@mui/material';
+import { Snackbar, SnackbarCloseReason, Alert } from '@mui/material';
 
 const SnackbarContext = createContext<SnackbarContextType>(undefined as never);
 
@@ -31,7 +32,15 @@ export const SnackbarContextProvider: FC = ({ children }) => {
 		setOpen(true);
 	}, []);
 
-	const handleClose = useCallback(() => setOpen(false), []);
+	const handleClose = useCallback(
+		(_event: SyntheticEvent<unknown, Event>, reason?: SnackbarCloseReason) => {
+			if (reason === 'clickaway') {
+				return;
+			}
+			setOpen(false);
+		},
+		[]
+	);
 
 	const SnackbarCtx = useMemo(
 		() => ({

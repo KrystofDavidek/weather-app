@@ -5,27 +5,37 @@ import {
 	CloseOutlined,
 	LocationSearching
 } from '@mui/icons-material';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import WeatherCard from '../components/WeatherCard';
 import { fetcher } from '../utils/fetcher';
 import { CurrentWeatherType } from '../models/weather';
 import useCurrentPosition from '../hooks/useCurrentPosition';
+import { useSnackbar } from '../hooks/useSnackbarContext';
 
 const Home = () => {
+	const { showSnackbar } = useSnackbar();
 	const [input, setInput] = useState<string>('');
 	const [gpsError, setGpsError] = useState<boolean>(false);
 	const { position } = useCurrentPosition();
 	const navigate = useNavigate();
 	const { paramLocation } = useParams();
 
+	const handleError = useCallback(() => {
+		showSnackbar({ text: 'Something went wrong...', variant: 'error' });
+	}, []);
+
 	const { data } = useSWR<CurrentWeatherType>(
 		paramLocation
 			? `current.json?key=${process.env.REACT_APP_API_KEY}&q=${paramLocation}&aqi=no`
 			: null,
 		fetcher,
-		{ shouldRetryOnError: false, revalidateOnFocus: false }
+		{
+			shouldRetryOnError: false,
+			revalidateOnFocus: false,
+			onError: handleError
+		}
 	);
 
 	const search = (isfromGps?: boolean) => {
