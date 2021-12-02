@@ -18,6 +18,7 @@ import {
 	ExpandLess,
 	Place
 } from '@mui/icons-material';
+import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
 
 import { fetcher } from '../utils/fetcher';
 import { CurrentWeatherType } from '../models/weather';
@@ -26,9 +27,10 @@ import { WeatherInfo } from './WeatherInfo/WeatherInfo';
 
 type Props = {
 	location: string;
+	dragHandleProps?: DraggableProvidedDragHandleProps;
 };
 
-export const FavoriteLocation = ({ location }: Props) => {
+export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
 	const [open, setOpen] = useState(false);
 	const { data } = useSWR<CurrentWeatherType>(
 		location
@@ -58,6 +60,7 @@ export const FavoriteLocation = ({ location }: Props) => {
 					item
 					xs="auto"
 					sx={{ mr: 1, display: 'grid', placeItems: 'center', color: 'gray' }}
+					{...dragHandleProps}
 				>
 					<DragIndicator />
 				</Grid>

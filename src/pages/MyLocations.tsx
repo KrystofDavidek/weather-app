@@ -1,14 +1,46 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid, Box, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import {
+	DragDropContext,
+	Droppable,
+	Draggable,
+	DropResult
+} from 'react-beautiful-dnd';
+import { useState } from 'react';
+import { updateDoc } from 'firebase/firestore';
 
+import { userDataDocument } from '../utils/firebase';
 import { FavoriteLocation } from '../components/FavoriteLocation';
 import PageTitle from '../components/PageTitle';
 import useUserContext from '../hooks/useUserContext';
 
 const MyLocations = () => {
-	const { userData } = useUserContext();
+	const { user, userData } = useUserContext();
+	const [locations, setLocations] = useState(userData?.locations ?? []);
 
-	const hasLocations = userData?.locations.length !== 0;
+	const hasLocations = locations.length !== 0;
+
+	const handleDragEnd = async (result: DropResult) => {
+		if (!result.destination || !user?.email) {
+			return;
+		}
+
+		const newLocations = locations ? [...locations] : [];
+		const reordered = newLocations?.splice(result.source.index, 1);
+
+		if (!reordered?.length) {
+			return;
+		}
+
+		const [reorderedItem] = reordered;
+		newLocations.splice(result.destination?.index, 0, reorderedItem);
+
+		setLocations(newLocations);
+
+		await updateDoc(userDataDocument(user.email), {
+			locations: newLocations
+		});
+	};
 
 	return (
 		<div>
@@ -17,11 +49,34 @@ const MyLocations = () => {
 					<PageTitle title="My locations" />
 				</Grid>
 				{hasLocations ? (
-					userData?.locations.map(location => (
-						<Grid item xs={12} lg={6} key={location}>
-							<FavoriteLocation location={location} />
-						</Grid>
-					))
+					<DragDropContext onDragEnd={handleDragEnd}>
+						<Droppable droppableId="favorite-locations-drag-and-drop">
+							{provided => (
+								<div {...provided.droppableProps} ref={provided.innerRef}>
+									{locations.map((location, index) => (
+										<Draggable
+											key={location}
+											draggableId={location}
+											index={index}
+										>
+											{provided => (
+												<Box
+													ref={provided.innerRef}
+													{...provided.draggableProps}
+													sx={{ mb: 2 }}
+												>
+													<FavoriteLocation
+														location={location}
+														dragHandleProps={provided.dragHandleProps}
+													/>
+												</Box>
+											)}
+										</Draggable>
+									))}
+								</div>
+							)}
+						</Droppable>
+					</DragDropContext>
 				) : (
 					<Grid item alignSelf="center">
 						<Typography textAlign="center">
