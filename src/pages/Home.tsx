@@ -1,11 +1,6 @@
 import useSWR from 'swr';
-import { TextField, Box, IconButton } from '@mui/material';
-import {
-	SearchOutlined,
-	CloseOutlined,
-	LocationSearching
-} from '@mui/icons-material';
-import { useCallback, useState } from 'react';
+import { Box } from '@mui/material';
+import { useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import WeatherCard from '../components/WeatherCard';
@@ -13,10 +8,10 @@ import { fetcher } from '../utils/fetcher';
 import { CurrentWeatherType } from '../models/weather';
 import useCurrentPosition from '../hooks/useCurrentPosition';
 import { useSnackbar } from '../hooks/useSnackbarContext';
+import Searchbar from '../components/Searchbar';
 
 const Home = () => {
 	const { showSnackbar } = useSnackbar();
-	const [input, setInput] = useState<string>('');
 	const { position } = useCurrentPosition();
 	const navigate = useNavigate();
 	const { paramLocation } = useParams();
@@ -37,7 +32,7 @@ const Home = () => {
 		}
 	);
 
-	const search = (isfromGps?: boolean) => {
+	const search = (input: string, isfromGps?: boolean) => {
 		if (isfromGps) {
 			if (position.latitude !== 0 && position.longitude !== 0) {
 				navigate(`/${position.latitude},${position.longitude}`);
@@ -50,14 +45,7 @@ const Home = () => {
 	};
 
 	const close = () => {
-		setInput('');
 		navigate('/');
-	};
-
-	const handleKeyDown = (event: { key: string }) => {
-		if (event.key === 'Enter') {
-			search();
-		}
 	};
 
 	return (
@@ -71,38 +59,7 @@ const Home = () => {
 				width: '100%'
 			}}
 		>
-			<TextField
-				sx={{ width: '70%', mb: '3rem' }}
-				id="outlined-helperText"
-				label="City"
-				helperText="search by city name"
-				value={input}
-				onChange={e => {
-					setInput(e.target.value);
-				}}
-				onKeyDown={handleKeyDown}
-				InputProps={{
-					startAdornment: (
-						<IconButton onClick={() => search(true)}>
-							<LocationSearching />
-						</IconButton>
-					),
-					endAdornment: (
-						<Box
-							sx={{
-								display: 'flex'
-							}}
-						>
-							<IconButton onClick={() => search()}>
-								<SearchOutlined />
-							</IconButton>
-							<IconButton onClick={close}>
-								<CloseOutlined />
-							</IconButton>
-						</Box>
-					)
-				}}
-			/>
+			<Searchbar onSearch={search} onClose={close} />
 			{data && <WeatherCard data={data} />}
 		</Box>
 	);
