@@ -31,7 +31,12 @@ const Layout: FC = ({ children }) => {
 				flexDirection: 'column'
 			}}
 		>
-			<AppBar position="fixed">
+			<AppBar
+				position="fixed"
+				sx={{
+					background: 'linear-gradient(to right, #096DD7, #5779EC, #8F84F8)'
+				}}
+			>
 				<Container maxWidth="sm">
 					<Toolbar disableGutters sx={{ gap: 2 }}>
 						<Button component={Link} to="/" sx={{ color: 'white' }}>
@@ -81,7 +86,7 @@ const Layout: FC = ({ children }) => {
 			>
 				{children}
 			</Container>
-			<Typography component="div" sx={{ mt: 'auto' }}>
+			<Typography component="div" sx={{ mt: 'auto', ml: 1 }}>
 				Powered by{' '}
 				<a href="https://www.weatherapi.com/" title="Free Weather API">
 					WeatherAPI.com
