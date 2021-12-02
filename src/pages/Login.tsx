@@ -10,16 +10,21 @@ import { Box } from '@mui/system';
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import { useSnackbar } from '../hooks/useSnackbarContext';
 import { logIn, signUp } from '../utils/firebase';
 
 const Login = () => {
 	const navigate = useNavigate();
+	const { showSnackbar } = useSnackbar();
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
 	const [isLogin, setLogin] = useState(true);
-	const [submitError, setSubmitError] = useState<string>();
+
+	const handleError = useCallback((text: string) => {
+		showSnackbar({ text, variant: 'error' });
+	}, []);
 
 	const toggleLogin = () => setLogin(value => !value);
 
@@ -41,9 +46,10 @@ const Login = () => {
 							isLogin
 								? await logIn(email, password)
 								: await signUp(email, password);
+							showSnackbar({ text: `Welcome, ${email}`, variant: 'success' });
 							navigate('/');
 						} catch (error) {
-							setSubmitError(
+							handleError(
 								(error as { message?: string })?.message ?? 'Unknown error'
 							);
 						}
@@ -97,15 +103,6 @@ const Login = () => {
 						<Button type="submit" variant="outlined">
 							{isLogin ? 'Log In' : 'Sign Up'}
 						</Button>
-						{submitError && (
-							<Typography
-								variant="caption"
-								textAlign="center"
-								sx={{ color: 'red' }}
-							>
-								{submitError}
-							</Typography>
-						)}
 					</Box>
 					<Divider />
 

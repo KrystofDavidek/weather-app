@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { TextField, Box, IconButton, Typography } from '@mui/material';
+import { TextField, Box, IconButton } from '@mui/material';
 import {
 	SearchOutlined,
 	CloseOutlined,
@@ -17,13 +17,12 @@ import { useSnackbar } from '../hooks/useSnackbarContext';
 const Home = () => {
 	const { showSnackbar } = useSnackbar();
 	const [input, setInput] = useState<string>('');
-	const [gpsError, setGpsError] = useState<boolean>(false);
 	const { position } = useCurrentPosition();
 	const navigate = useNavigate();
 	const { paramLocation } = useParams();
 
-	const handleError = useCallback(() => {
-		showSnackbar({ text: 'Something went wrong...', variant: 'error' });
+	const handleError = useCallback((text: string) => {
+		showSnackbar({ text, variant: 'error' });
 	}, []);
 
 	const { data } = useSWR<CurrentWeatherType>(
@@ -34,17 +33,16 @@ const Home = () => {
 		{
 			shouldRetryOnError: false,
 			revalidateOnFocus: false,
-			onError: handleError
+			onError: () => handleError('Cannot fetch data for selected location')
 		}
 	);
 
 	const search = (isfromGps?: boolean) => {
-		setGpsError(false);
 		if (isfromGps) {
 			if (position.latitude !== 0 && position.longitude !== 0) {
-				navigate(`${position.latitude},${position.longitude}`);
+				navigate(`/${position.latitude},${position.longitude}`);
 			} else {
-				setGpsError(true);
+				handleError('Cannot fetch GPS data, try again');
 			}
 		} else {
 			navigate(`/${input}`);
@@ -73,12 +71,6 @@ const Home = () => {
 				width: '100%'
 			}}
 		>
-			{gpsError && (
-				<Typography color="red" mb={2}>
-					Problem with location, click on location icon again.
-				</Typography>
-			)}
-
 			<TextField
 				sx={{ width: '70%', mb: '3rem' }}
 				id="outlined-helperText"
