@@ -10,6 +10,7 @@ import { useState } from 'react';
 type DegreesUnit = 'celsius' | 'fahrenheit';
 
 const TemperatureUnit = () => {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [value, setValue] = useState<DegreesUnit>('celsius');
 	return (
 		<FormControl

@@ -1,23 +1,15 @@
 import { Button, Card, Divider, Grid } from '@mui/material';
-import { updateDoc } from 'firebase/firestore';
-import { useCallback } from 'react';
 
 import PageTitle from '../components/PageTitle';
 import SpeedUnit from '../components/SpeedUnit';
 import TemperatureUnit from '../components/TemperatureUnit';
 import UsernameSetter from '../components/UsernameSetter';
 import useUserContext from '../hooks/useUserContext';
-import { userDataDocument } from '../utils/firebase';
 
 const Settings = () => {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const { user, userData } = useUserContext();
 
-	const onSubmit = async () => {
-		if (!user?.email) {
-			return;
-		}
-		await updateDoc(userDataDocument(user.email), {});
-	};
 	return (
 		<Grid
 			container

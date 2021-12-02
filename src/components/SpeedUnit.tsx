@@ -10,6 +10,7 @@ import { useState } from 'react';
 type SpeedUnit = 'kilometers' | 'miles';
 
 const SpeedUnit = () => {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [value, setValue] = useState<SpeedUnit>('kilometers');
 	return (
 		<FormControl
