@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
+import logo from '../assets/images/logo.png';
 import useUserContext from '../hooks/useUserContext';
 import { signOut } from '../utils/firebase';
 
@@ -37,16 +38,23 @@ const Layout: FC = ({ children }) => {
 					background: 'linear-gradient(to right, #096DD7, #5779EC, #8F84F8)'
 				}}
 			>
-				<Container maxWidth="sm">
+				<Container>
 					<Toolbar disableGutters sx={{ gap: 2 }}>
-						<Button component={Link} to="/" sx={{ color: 'white' }}>
+						<Button component={Link} to="/welcome">
+							<img src={logo} alt="logo" height="40" width="40" />
+						</Button>
+						<Button
+							component={Link}
+							to="/"
+							sx={{ color: 'white', width: '10rem' }}
+						>
 							Find location
 						</Button>
 						{user && (
 							<Button
 								component={Link}
 								to="/my-locations"
-								sx={{ color: 'white' }}
+								sx={{ color: 'white', width: '10rem' }}
 							>
 								My locations
 							</Button>
