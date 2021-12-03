@@ -11,7 +11,7 @@ const MyLocations = () => {
 		<div>
 			<Grid container direction="column" gap={4}>
 				<Grid item sx={{ alignSelf: 'center' }}>
-					<PageTitle title="My locations" />
+					<PageTitle title="EXAMPLE" />
 				</Grid>
 				<Grid item container gap={2} justifyContent="space-evenly">
 					{userData?.locations.map(location => (
