@@ -9,7 +9,8 @@ import {
 	Collapse,
 	Grow,
 	IconButton,
-	Divider
+	Divider,
+	Tooltip
 } from '@mui/material';
 import {
 	DragIndicator,
@@ -24,6 +25,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { fetcher } from '../utils/fetcher';
 import { CurrentWeatherType } from '../models/weather';
+import { useDialog } from '../hooks/useDialogContext';
+import { DeleteLocationDialog } from '../components/Dialogs/DeleteLocationDialog';
 
 import { WeatherInfo } from './WeatherInfo/WeatherInfo';
 
@@ -33,9 +36,20 @@ type Props = {
 };
 
 export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
-	const [open, setOpen] = useState(false);
 	const theme = useTheme();
+	const { openDialog } = useDialog();
+	const [open, setOpen] = useState(false);
 	const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+
+	const handleOnDeleteClick = () => {
+		openDialog({
+			Content: DeleteLocationDialog,
+			props: {
+				location
+			}
+		});
+	};
+
 	const { data } = useSWR<CurrentWeatherType>(
 		location
 			? `current.json?key=${process.env.REACT_APP_API_KEY}&q=${location}&aqi=no`
@@ -105,13 +119,11 @@ export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
 					</IconButton>
 				</Grid>
 				<Grid item xs="auto">
-					<IconButton
-						onClick={() => {
-							console.log('TODO');
-						}}
-					>
-						<Delete sx={{ color: 'red' }} />
-					</IconButton>
+					<Tooltip title="Remove location from favorites" placement="top">
+						<IconButton onClick={handleOnDeleteClick}>
+							<Delete sx={{ color: 'red' }} />
+						</IconButton>
+					</Tooltip>
 				</Grid>
 			</Grid>
 			<Collapse in={open}>
