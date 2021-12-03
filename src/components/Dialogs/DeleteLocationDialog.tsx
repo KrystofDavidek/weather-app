@@ -42,7 +42,7 @@ export const DeleteLocationDialog = ({ location, close }: Props) => {
 
 	return (
 		<>
-			<DialogTitle>Delete favorite locaiton</DialogTitle>
+			<DialogTitle>Delete favorite location</DialogTitle>
 			<DialogContent>
 				<DialogContentText>
 					Are you sure you want to delete{' '}

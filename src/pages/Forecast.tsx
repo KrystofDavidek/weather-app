@@ -80,7 +80,7 @@ const Forecast = () => {
 					>
 						<Grid item>
 							{data && (
-								<Typography variant="h3">
+								<Typography variant="h4">
 									{`${data.location.name}, ${data.location.country}`}
 								</Typography>
 							)}
