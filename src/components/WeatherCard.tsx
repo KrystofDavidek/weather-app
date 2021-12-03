@@ -62,10 +62,7 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
 					borderWidth: 2
 				}}
 			>
-				<Box sx={{ display: 'flex', justifyContent: 'space-between', p: 1 }}>
-					<Box sx={{ display: 'grid', placeItems: 'center' }}>
-						<DragIndicator sx={{ color: 'primary.main', cursor: 'pointer' }} />
-					</Box>
+				<Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
 					{user && (
 						<Tooltip
 							title={activeStar ? 'Remove from favorites' : 'Add to favorites'}
