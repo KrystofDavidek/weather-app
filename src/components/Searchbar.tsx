@@ -79,7 +79,7 @@ const Searchbar = ({ onSearch, onClose }: Props) => {
 						...params.InputProps,
 						startAdornment: (
 							<IconButton onClick={() => onSearch(input, true)}>
-								<LocationSearching />
+								<LocationSearching sx={{ color: 'primary.main' }} />
 							</IconButton>
 						),
 						endAdornment: (
@@ -89,10 +89,10 @@ const Searchbar = ({ onSearch, onClose }: Props) => {
 								}}
 							>
 								<IconButton onClick={() => onSearch(input)}>
-									<SearchOutlined />
+									<SearchOutlined sx={{ color: 'primary.main' }} />
 								</IconButton>
 								<IconButton onClick={() => close()}>
-									<CloseOutlined />
+									<CloseOutlined sx={{ color: 'primary.main' }} />
 								</IconButton>
 							</Box>
 						)

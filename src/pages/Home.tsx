@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { Box } from '@mui/material';
+import { Box, Zoom } from '@mui/material';
 import { useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -49,19 +49,21 @@ const Home = () => {
 	};
 
 	return (
-		<Box
-			maxWidth="sm"
-			sx={{
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				alignSelf: 'center',
-				width: '100%'
-			}}
-		>
-			<Searchbar onSearch={search} onClose={close} />
-			{data && <WeatherCard data={data} />}
-		</Box>
+		<Zoom in style={{ transitionDuration: '400ms' }}>
+			<Box
+				maxWidth="sm"
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					alignSelf: 'center',
+					width: '100%'
+				}}
+			>
+				<Searchbar onSearch={search} onClose={close} />
+				{data && <WeatherCard data={data} />}
+			</Box>
+		</Zoom>
 	);
 };
 

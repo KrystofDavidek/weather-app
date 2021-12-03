@@ -8,11 +8,13 @@ import {
 	MenuItem,
 	SelectChangeEvent,
 	FormControl,
-	InputLabel
+	InputLabel,
+	Slide
 } from '@mui/material';
 import { useParams } from 'react-router';
 import useSWR from 'swr';
 import { format, addDays } from 'date-fns';
+import { grey } from '@mui/material/colors';
 
 import PageTitle from '../components/PageTitle';
 import ForecastCard from '../components/ForecastCard';
@@ -68,38 +70,53 @@ const Forecast = () => {
 	return (
 		<Box sx={{ mb: '2rem' }}>
 			<Grid container alignItems="center" gap={1}>
-				<Grid item>
-					<PageTitle title="Hourly forecast" />
-				</Grid>
-				<Grid
-					item
-					container
-					alignItems="center"
-					gap={2}
-					justifyContent="space-between"
-				>
+				<Slide direction="down" in timeout={600}>
 					<Grid item>
-						<Typography sx={{ fontSize: 24 }}>{data.location.name}</Typography>
+						<PageTitle title="Hourly forecast" />
 					</Grid>
-					<Grid item>
-						<FormControl>
-							<InputLabel id="forecast-day">Day</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={day}
-								label="Day"
-								onChange={handleChange}
+				</Slide>
+				<Slide direction="down" in timeout={600}>
+					<Grid
+						item
+						container
+						alignItems="center"
+						gap={2}
+						justifyContent="space-between"
+					>
+						<Grid item>
+							<Typography
+								variant="h3"
+								color={grey}
+								sx={{
+									mr: '1rem',
+									fontSize: 32,
+									fontWeight: 500
+								}}
 							>
-								{dayOptions.map(option => (
-									<MenuItem key={option.value} value={option.value}>
-										{option.label}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
+								{data.location.name}
+							</Typography>
+						</Grid>
+
+						<Grid item>
+							<FormControl>
+								<InputLabel id="forecast-day">Day</InputLabel>
+								<Select
+									labelId="demo-simple-select-label"
+									id="demo-simple-select"
+									value={day}
+									label="Day"
+									onChange={handleChange}
+								>
+									{dayOptions.map(option => (
+										<MenuItem key={option.value} value={option.value}>
+											{option.label}
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+						</Grid>
 					</Grid>
-				</Grid>
+				</Slide>
 			</Grid>
 			{data.forecast.forecastday[0]?.hour.map(data => (
 				<ForecastCard key={data.time_epoch} data={data} />
