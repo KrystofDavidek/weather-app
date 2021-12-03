@@ -8,7 +8,7 @@ const PageTitle = ({ title }: Props) => (
 	<Typography
 		variant="h1"
 		sx={{ fontSize: 42, fontWeight: 500 }}
-		color="GrayText"
+		color="primary.main"
 	>
 		{title}
 	</Typography>

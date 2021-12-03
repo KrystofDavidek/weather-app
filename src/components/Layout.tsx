@@ -15,7 +15,7 @@ import useUserContext from '../hooks/useUserContext';
 import { signOut } from '../utils/firebase';
 
 const Layout: FC = ({ children }) => {
-	const { user } = useUserContext();
+	const { user, userData } = useUserContext();
 	const navigate = useNavigate();
 
 	const handleSignOut = useCallback(async () => {
@@ -31,7 +31,12 @@ const Layout: FC = ({ children }) => {
 				flexDirection: 'column'
 			}}
 		>
-			<AppBar position="fixed">
+			<AppBar
+				position="fixed"
+				sx={{
+					background: 'linear-gradient(to right, #096DD7, #5779EC, #8F84F8)'
+				}}
+			>
 				<Container maxWidth="sm">
 					<Toolbar disableGutters sx={{ gap: 2 }}>
 						<Button component={Link} to="/" sx={{ color: 'white' }}>
@@ -54,6 +59,11 @@ const Layout: FC = ({ children }) => {
 									to="/settings"
 									sx={{ color: 'white' }}
 								>
+									{userData?.userName && (
+										<Button sx={{ color: 'white' }}>
+											{userData?.userName}
+										</Button>
+									)}
 									<SettingsIcon />
 								</IconButton>
 								<Button onClick={handleSignOut} sx={{ color: 'white' }}>
@@ -81,7 +91,7 @@ const Layout: FC = ({ children }) => {
 			>
 				{children}
 			</Container>
-			<Typography component="div" sx={{ mt: 'auto' }}>
+			<Typography component="div" sx={{ mt: 'auto', ml: 1 }}>
 				Powered by{' '}
 				<a href="https://www.weatherapi.com/" title="Free Weather API">
 					WeatherAPI.com

@@ -10,6 +10,7 @@ import { Box } from '@mui/system';
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import PageTitle from '../components/PageTitle';
 import { useSnackbar } from '../hooks/useSnackbarContext';
 import { logIn, signUp } from '../utils/firebase';
 
@@ -36,7 +37,7 @@ const Login = () => {
 			justifyContent="center"
 			sx={{ minHeight: '50vh' }}
 		>
-			<Grid item sx={{ minWidth: '40vh' }}>
+			<Grid item sx={{ minWidth: '40vh', alignSelf: 'center' }}>
 				<Card
 					component="form"
 					variant="outlined"
@@ -57,15 +58,17 @@ const Login = () => {
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
+						borderColor: 'primary.main',
+						borderWidth: 2,
 						width: '100%',
 						pt: 4,
 						px: 4,
 						gap: 2
 					}}
 				>
-					<Typography variant="h4" component="h2" textAlign="center" mb={3}>
-						{isLogin ? 'Log In' : 'Sign Up'}
-					</Typography>
+					<div style={{ alignSelf: 'center', marginBottom: 10 }}>
+						<PageTitle title={isLogin ? 'Log In' : 'Sign Up'} />
+					</div>
 
 					<TextField
 						label="E-mail"
@@ -100,11 +103,16 @@ const Login = () => {
 							m: 2
 						}}
 					>
-						<Button type="submit" variant="outlined">
+						<Button
+							type="submit"
+							variant="outlined"
+							sx={{ color: 'primary.main' }}
+						>
 							{isLogin ? 'Log In' : 'Sign Up'}
 						</Button>
 					</Box>
-					<Divider />
+
+					<Divider style={{ color: 'primary.main' }} variant="middle" />
 
 					{/* Log In/Sign up switch */}
 					<Box
@@ -118,12 +126,20 @@ const Login = () => {
 							gap: 4
 						}}
 					>
-						<Typography variant="subtitle1" mb={3}>
+						<Typography variant="subtitle1" mb={3} color="primary.main">
 							{isLogin
 								? `Don't have an account yet?`
 								: 'Already have an account?'}
 						</Typography>
-						<Button variant="contained" onClick={toggleLogin} sx={{ mb: 3 }}>
+						<Button
+							variant="contained"
+							onClick={toggleLogin}
+							sx={{
+								mb: 3,
+								background:
+									'linear-gradient(to right, #096DD7, #5779EC, #8F84F8)'
+							}}
+						>
 							{isLogin ? 'Sign Up' : 'Log In'}
 						</Button>
 					</Box>

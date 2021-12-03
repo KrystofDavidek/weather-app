@@ -36,6 +36,7 @@ export const signUp = async (email: string, password: string) => {
 	}
 	await setDoc(userDataDocument(user.email), {
 		userEmail: user.email,
+		userName: '',
 		locations: [],
 		degreesUnit: 'celsius',
 		speedUnit: 'kilometers'
