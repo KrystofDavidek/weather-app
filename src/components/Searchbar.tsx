@@ -23,7 +23,7 @@ const Searchbar = ({ onSearch, onClose }: Props) => {
 
 	const { data } = useSWR<Location[]>(
 		input
-			? `search.json?key=${process.env.REACT_APP_API_KEY}&q=${input}`
+			? `search.json?key=${process.env.REACT_APP_API_KEY}&q=${debouncedValue}`
 			: null,
 		fetcher,
 		{
@@ -57,7 +57,7 @@ const Searchbar = ({ onSearch, onClose }: Props) => {
 
 	useEffect(() => {
 		setLocations(data ? data.map(location => location.name) : []);
-	}, [debouncedValue]);
+	}, [data]);
 
 	return (
 		<Autocomplete

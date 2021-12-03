@@ -81,6 +81,7 @@ const MyLocations = () => {
 											)}
 										</Draggable>
 									))}
+									{provided.placeholder}
 								</div>
 							)}
 						</Droppable>
