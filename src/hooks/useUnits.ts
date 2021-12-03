@@ -1,5 +1,3 @@
-import { Current } from '../models/forecast';
-
 import useUserContext from './useUserContext';
 
 type UnitType = {

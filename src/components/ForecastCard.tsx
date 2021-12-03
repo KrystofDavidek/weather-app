@@ -19,7 +19,13 @@ const ForecastCard = ({ data }: Props) => {
 						{format(new Date(data.time), 'HH:mm')}
 					</Grid>
 					<Grid item xs={6} sm={4} md={2}>
-						<Typography sx={{ fontWeight: 500, fontSize: 24 }}>
+						<Typography
+							sx={{
+								fontWeight: 500,
+								fontSize: 24,
+								ml: data[temp.key] >= 0 ? 1.25 : 0
+							}}
+						>
 							{data[temp.key]}
 							{temp.unit}
 						</Typography>
