@@ -33,7 +33,7 @@ const dayOptions: Option<DayOptionValues>[] = [
 	},
 	{
 		value: 'twoDaysLater',
-		label: format(new Date(), 'cccc')
+		label: format(addDays(new Date(), 2), 'cccc')
 	}
 ];
 
