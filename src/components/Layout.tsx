@@ -63,12 +63,17 @@ const Layout: FC = ({ children }) => {
 						{user ? (
 							<>
 								<IconButton
+									disableFocusRipple
 									component={Link}
 									to="/settings"
 									sx={{ color: 'white' }}
 								>
 									{userData?.userName && (
-										<Button sx={{ color: 'white' }}>
+										<Button
+											disableFocusRipple
+											disableRipple
+											sx={{ color: 'white' }}
+										>
 											{userData?.userName}
 										</Button>
 									)}

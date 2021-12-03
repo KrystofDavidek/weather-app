@@ -1,4 +1,4 @@
-import { Grid, Box, Typography } from '@mui/material';
+import { Grid, Box, Typography, Slide, Fade } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import {
 	DragDropContext,
@@ -45,9 +45,11 @@ const MyLocations = () => {
 	return (
 		<div>
 			<Grid container direction="column" gap={4}>
-				<Grid item>
-					<PageTitle title="My locations" />
-				</Grid>
+				<Slide direction="down" in timeout={500}>
+					<Grid item>
+						<PageTitle title="My locations" />
+					</Grid>
+				</Slide>
 				{hasLocations ? (
 					<DragDropContext onDragEnd={handleDragEnd}>
 						<Droppable droppableId="favorite-locations-drag-and-drop">
@@ -60,16 +62,18 @@ const MyLocations = () => {
 											index={index}
 										>
 											{provided => (
-												<Box
-													ref={provided.innerRef}
-													{...provided.draggableProps}
-													sx={{ mb: 2 }}
-												>
-													<FavoriteLocation
-														location={location}
-														dragHandleProps={provided.dragHandleProps}
-													/>
-												</Box>
+												<Fade in timeout={700}>
+													<Box
+														ref={provided.innerRef}
+														{...provided.draggableProps}
+														sx={{ mb: 2 }}
+													>
+														<FavoriteLocation
+															location={location}
+															dragHandleProps={provided.dragHandleProps}
+														/>
+													</Box>
+												</Fade>
 											)}
 										</Draggable>
 									))}
