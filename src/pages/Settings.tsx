@@ -37,9 +37,10 @@ const Settings = () => {
 		if (!user?.email) {
 			return;
 		}
+		const userNameProps = state.userName ? { userName: state.userName } : {};
 		try {
 			await updateDoc(userDataDocument(user.email), {
-				userName: state.userName,
+				...userNameProps,
 				degreesUnit: state.degreesUnit,
 				speedUnit: state.speedUnit
 			});
@@ -79,7 +80,7 @@ const Settings = () => {
 						<Divider style={{ color: 'primary.main' }} variant="middle" />
 
 						<UsernameSetter
-							value=""
+							value={state.userName}
 							current={userData?.userName}
 							onChange={handleChange}
 						/>

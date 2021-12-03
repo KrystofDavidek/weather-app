@@ -14,7 +14,6 @@ import {
 import { useParams } from 'react-router';
 import useSWR from 'swr';
 import { format, addDays } from 'date-fns';
-import { grey } from '@mui/material/colors';
 
 import PageTitle from '../components/PageTitle';
 import ForecastCard from '../components/ForecastCard';
