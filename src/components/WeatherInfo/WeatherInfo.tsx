@@ -19,6 +19,7 @@ type Props = {
 export const WeatherInfo = ({ data }: Props) => {
 	const { temp, wind } = useUnits();
 	const { location, current } = data;
+
 	return (
 		<Box>
 			<Grid container alignItems="center">

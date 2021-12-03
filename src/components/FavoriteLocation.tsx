@@ -19,6 +19,8 @@ import {
 	Place
 } from '@mui/icons-material';
 import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { fetcher } from '../utils/fetcher';
 import { CurrentWeatherType } from '../models/weather';
@@ -32,6 +34,8 @@ type Props = {
 
 export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
 	const [open, setOpen] = useState(false);
+	const theme = useTheme();
+	const isSm = useMediaQuery(theme.breakpoints.down('sm'));
 	const { data } = useSWR<CurrentWeatherType>(
 		location
 			? `current.json?key=${process.env.REACT_APP_API_KEY}&q=${location}&aqi=no`
@@ -72,7 +76,7 @@ export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
 					<Typography sx={{ fontWeight: 500 }}>{data.location.name}</Typography>
 				</Grid>
 				<Grid item xs>
-					<Grow in={!open}>
+					<Grow in={!open && !isSm}>
 						<Grid
 							container
 							alignItems="center"

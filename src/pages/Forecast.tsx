@@ -58,10 +58,6 @@ const Forecast = () => {
 		return <Typography align="center">Something went wrong...</Typography>;
 	}
 
-	if (!data) {
-		return <LinearProgress />;
-	}
-
 	const handleChange = (event: SelectChangeEvent<DayOptionValues>) => {
 		event.preventDefault();
 		setDay(event.target.value as DayOptionValues);
@@ -84,9 +80,11 @@ const Forecast = () => {
 						justifyContent="space-between"
 					>
 						<Grid item>
-							<Typography variant="h3">
-								{`${data.location.name}, ${data.location.country}`}
-							</Typography>
+							{data && (
+								<Typography variant="h3">
+									{`${data.location.name}, ${data.location.country}`}
+								</Typography>
+							)}
 						</Grid>
 
 						<Grid item>
@@ -110,9 +108,15 @@ const Forecast = () => {
 					</Grid>
 				</Slide>
 			</Grid>
-			{data.forecast.forecastday[0]?.hour.map(data => (
-				<ForecastCard key={data.time_epoch} data={data} />
-			))}
+			{!data ? (
+				<Box sx={{ mt: 5 }}>
+					<LinearProgress />
+				</Box>
+			) : (
+				data.forecast.forecastday[0]?.hour.map(data => (
+					<ForecastCard key={data.time_epoch} data={data} />
+				))
+			)}
 		</Box>
 	);
 };
