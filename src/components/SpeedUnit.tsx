@@ -5,13 +5,28 @@ import {
 	RadioGroup,
 	Typography
 } from '@mui/material';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-type SpeedUnit = 'kilometers' | 'miles';
+type Props = {
+	current: 'kilometers' | 'miles' | undefined;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};
 
-const SpeedUnit = () => {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [value, setValue] = useState<SpeedUnit>('kilometers');
+const SpeedUnit = ({ current, onChange }: Props) => {
+	const [selected, setSelected] = useState(current);
+
+	const isSelected = (value: string) => {
+		if (selected === value) {
+			return true;
+		}
+	};
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const handleChange = (e: any) => {
+		setSelected(e.target.value);
+		onChange(e);
+	};
+
 	return (
 		<FormControl
 			component="fieldset"
@@ -24,19 +39,23 @@ const SpeedUnit = () => {
 			<RadioGroup
 				row
 				aria-label="unit"
-				name="controlled-radio-buttons-group"
-				value={value}
-				// onChange={handleChange}
+				name="speedUnit"
+				value={selected}
+				onChange={onChange}
 			>
 				<FormControlLabel
-					value="kilometres"
+					value="kilometers"
 					control={<Radio sx={{ color: 'primary.main' }} />}
-					label="Kilometres"
+					label="Kilometers"
+					checked={isSelected('kilometres')}
+					onChange={handleChange}
 				/>
 				<FormControlLabel
 					value="miles"
 					control={<Radio sx={{ color: 'primary.main' }} />}
 					label="Miles"
+					checked={isSelected('miles')}
+					onChange={handleChange}
 				/>
 			</RadioGroup>
 		</FormControl>

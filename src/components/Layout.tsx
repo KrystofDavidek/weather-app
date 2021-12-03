@@ -15,7 +15,7 @@ import useUserContext from '../hooks/useUserContext';
 import { signOut } from '../utils/firebase';
 
 const Layout: FC = ({ children }) => {
-	const { user } = useUserContext();
+	const { user, userData } = useUserContext();
 	const navigate = useNavigate();
 
 	const handleSignOut = useCallback(async () => {
@@ -59,6 +59,11 @@ const Layout: FC = ({ children }) => {
 									to="/settings"
 									sx={{ color: 'white' }}
 								>
+									{userData?.userName && (
+										<Button sx={{ color: 'white' }}>
+											{userData?.userName}
+										</Button>
+									)}
 									<SettingsIcon />
 								</IconButton>
 								<Button onClick={handleSignOut} sx={{ color: 'white' }}>

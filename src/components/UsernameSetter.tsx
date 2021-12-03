@@ -1,24 +1,38 @@
 import { FormControl, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 
-const UsernameSetter = () => {
-	const [username, setUsername] = useState<string>('');
+type Props = {
+	current: string | undefined;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};
+
+const UsernameSetter = ({ current, onChange }: Props) => {
+	const [username, setUsername] = useState(current);
+
+	const currentNickname = current ? `Currently: ${current}` : 'No nickname yet';
 
 	return (
-		<FormControl
-			component="fieldset"
-			sx={{ justifyContent: 'center', alignItems: 'center' }}
-		>
-			<Typography variant="subtitle1" color="primary.main" fontWeight="600">
+		<FormControl sx={{ justifyContent: 'center', alignItems: 'center' }}>
+			<Typography
+				variant="subtitle1"
+				color="primary.main"
+				fontWeight="600"
+				sx={{ mb: 2 }}
+			>
 				Set a nickname
 			</Typography>
 
 			<TextField
-				label="Nickname"
 				id="username"
+				name="userName"
 				value={username}
-				onChange={e => setUsername(e.target.value)}
-				type="email"
+				onChange={useCallback((e: ChangeEvent<HTMLInputElement>) => {
+					e.preventDefault();
+					setUsername(e.target.value);
+					onChange(e);
+				}, [])}
+				helperText={currentNickname}
+				type="text"
 			/>
 		</FormControl>
 	);

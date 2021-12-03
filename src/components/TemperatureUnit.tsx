@@ -5,13 +5,27 @@ import {
 	RadioGroup,
 	Typography
 } from '@mui/material';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-type DegreesUnit = 'celsius' | 'fahrenheit';
+type Props = {
+	current: 'celsius' | 'fahrenheit' | undefined;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};
 
-const TemperatureUnit = () => {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [value, setValue] = useState<DegreesUnit>('celsius');
+const TemperatureUnit = ({ current, onChange }: Props) => {
+	const [selected, setSelected] = useState(current);
+
+	const isSelected = (value: string) => {
+		if (selected === value) {
+			return true;
+		}
+	};
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const handleChange = (e: any) => {
+		setSelected(e.target.value);
+		onChange(e);
+	};
 	return (
 		<FormControl
 			component="fieldset"
@@ -24,19 +38,23 @@ const TemperatureUnit = () => {
 			<RadioGroup
 				row
 				aria-label="unit"
-				name="controlled-radio-buttons-group"
-				value={value}
-				// onChange={handleChange}
+				name="degreesUnit"
+				value={selected}
+				onChange={onChange}
 			>
 				<FormControlLabel
 					value="celsius"
 					control={<Radio sx={{ color: 'primary.main' }} />}
 					label="Celsius"
+					checked={isSelected('celsius')}
+					onChange={handleChange}
 				/>
 				<FormControlLabel
 					value="fahrenheit"
 					control={<Radio sx={{ color: 'primary.main' }} />}
 					label="Fahrenheit"
+					checked={isSelected('fahrenheit')}
+					onChange={handleChange}
 				/>
 			</RadioGroup>
 		</FormControl>
