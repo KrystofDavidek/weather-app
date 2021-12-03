@@ -6,7 +6,7 @@ import {
 	Draggable,
 	DropResult
 } from 'react-beautiful-dnd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { updateDoc } from 'firebase/firestore';
 
 import { userDataDocument } from '../utils/firebase';
@@ -17,6 +17,10 @@ import useUserContext from '../hooks/useUserContext';
 const MyLocations = () => {
 	const { user, userData } = useUserContext();
 	const [locations, setLocations] = useState(userData?.locations ?? []);
+
+	useEffect(() => {
+		setLocations(userData?.locations ?? []);
+	}, [userData]);
 
 	const hasLocations = locations.length !== 0;
 

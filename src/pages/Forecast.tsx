@@ -84,16 +84,8 @@ const Forecast = () => {
 						justifyContent="space-between"
 					>
 						<Grid item>
-							<Typography
-								variant="h3"
-								color={grey}
-								sx={{
-									mr: '1rem',
-									fontSize: 32,
-									fontWeight: 500
-								}}
-							>
-								{data.location.name}
+							<Typography variant="h3">
+								{`${data.location.name}, ${data.location.country}`}
 							</Typography>
 						</Grid>
 

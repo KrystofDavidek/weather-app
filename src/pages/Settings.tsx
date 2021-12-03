@@ -13,7 +13,7 @@ import { userDataDocument } from '../utils/firebase';
 const Settings = () => {
 	const { user, userData } = useUserContext();
 	const [state, setState] = useState({
-		userName: userData?.userName,
+		userName: '',
 		degreesUnit: userData?.degreesUnit,
 		speedUnit: userData?.speedUnit
 	});
@@ -43,6 +43,7 @@ const Settings = () => {
 				degreesUnit: state.degreesUnit,
 				speedUnit: state.speedUnit
 			});
+			setState(prev => ({ ...prev, userName: '' }));
 			showSnackbar({ text: 'Successfully updated', variant: 'success' });
 		} catch (error) {
 			handleError((error as { message?: string })?.message ?? 'Unknown error');
@@ -78,6 +79,7 @@ const Settings = () => {
 						<Divider style={{ color: 'primary.main' }} variant="middle" />
 
 						<UsernameSetter
+							value=""
 							current={userData?.userName}
 							onChange={handleChange}
 						/>

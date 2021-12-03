@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import useSWR from 'swr';
 import {
 	Box,
-	CircularProgress,
+	LinearProgress,
 	Paper,
 	Grid,
 	Typography,
@@ -43,7 +43,11 @@ export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
 	const toggleMenu = useCallback(() => setOpen(previous => !previous), []);
 
 	if (!data) {
-		return <CircularProgress />;
+		return (
+			<Box sx={{ p: 2 }}>
+				<LinearProgress />
+			</Box>
+		);
 	}
 
 	return (
@@ -99,10 +103,10 @@ export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
 				<Grid item xs="auto">
 					<IconButton
 						onClick={() => {
-							console.log('clicked');
+							console.log('TODO');
 						}}
 					>
-						<Delete />
+						<Delete sx={{ color: 'red' }} />
 					</IconButton>
 				</Grid>
 			</Grid>
