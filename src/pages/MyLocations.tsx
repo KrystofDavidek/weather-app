@@ -87,18 +87,18 @@ const MyLocations = () => {
 						</Droppable>
 					</DragDropContext>
 				) : (
-					<Grid item alignSelf="center">
-						<Typography textAlign="center">
-							You have no favorite locations
+					<Grid item>
+						<Typography variant="h6">
+							You have no favorite locations ...
 						</Typography>
-						<Typography textAlign="center">
-							Search for the locations{' '}
+						<Typography variant="h6">
+							Go{' '}
 							<NavLink to="/">
-								<Typography component="span" sx={{ fontWeight: 500 }}>
+								<Typography component="span" variant="h6">
 									here
 								</Typography>
 							</NavLink>{' '}
-							and add them to your favorite list
+							and add some locations to your favorite list!
 						</Typography>
 					</Grid>
 				)}
