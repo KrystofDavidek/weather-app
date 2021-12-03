@@ -1,7 +1,13 @@
 import useUserContext from './useUserContext';
 
 type UnitType = {
-	key: 'temp_c' | 'temp_f' | 'wind_mph' | 'wind_kph';
+	key:
+		| 'temp_c'
+		| 'temp_f'
+		| 'wind_mph'
+		| 'wind_kph'
+		| 'feelslike_c'
+		| 'feelslike_f';
 	unit: string;
 };
 
@@ -30,5 +36,16 @@ export const useUnits = () => {
 					unit: 'kmph'
 			  };
 
-	return { temp, wind };
+	const feelslike: UnitType =
+		userData?.degreesUnit === 'fahrenheit'
+			? {
+					key: 'feelslike_f',
+					unit: '°F'
+			  }
+			: {
+					key: 'feelslike_c',
+					unit: '°C'
+			  };
+
+	return { temp, wind, feelslike };
 };
