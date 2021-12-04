@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { StarOutline, Star, DragIndicator } from '@mui/icons-material';
+import { StarOutline, Star } from '@mui/icons-material';
 import { arrayUnion, arrayRemove, updateDoc } from 'firebase/firestore';
 import { grey } from '@mui/material/colors';
 
