@@ -1,46 +1,25 @@
-# Getting Started with Create React App
+# Weather App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a lightweight React web app implemented as the final project of the PV247 course at FI MUNI.
 
-## Available Scripts
+![](https://github.com/Sedoriko/weather-app/blob/main/src/assets/images/logo.png | width=100)
 
-In the project directory, you can run:
+## About
 
-### `yarn start`
+The app's main purpose is to provide weather information. It can show the current weather for your **current location**, as well as for the **user-defined location**. There is an option to show the **three-day hourly forecast** for the selected location. It can be accessed after selecting the location on `Find location` page. This functionality is supported for all users. Registered and logged-in users can mark the **locations as favourites** and they have access to them on a separate page `My locations`. These users are also allowed to change the **temperature and speed units** (metric system by default), as well as the **user nickname** (default user name is their e-mail). 
 
-Runs the app in the development mode.\
+## Authors
+
+- Ivana Papcunova (456556)
+- Krystof Davidek (463176)
+- Michal Cizek (484946)
+
+## Production build
+
+The app is hosted on Netlify on this URL: [https://myweatherpv247.netlify.app/](https://myweatherpv247.netlify.app/). Every push to main branch updates this build.
+
+## Local build
+
+Clone the repository and from the root directory run `yarn` or `yarn install` to install dependencies. \
+After that, you can run `yarn start`. This runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
