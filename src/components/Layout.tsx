@@ -1,29 +1,33 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
 	AppBar,
 	Container,
 	Toolbar,
-	Button,
 	Box,
 	IconButton,
 	Typography,
-	CircularProgress
+	CircularProgress,
+	Button,
+	Drawer,
+	useTheme,
+	useMediaQuery
 } from '@mui/material';
-import SettingsIcon from '@mui/icons-material/Settings';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import logo from '../assets/images/logo.png';
 import useUserContext from '../hooks/useUserContext';
-import { signOut } from '../utils/firebase';
+
+import Navigation from './Navigation';
 
 const Layout: FC = ({ children }) => {
-	const { user, loading, userData } = useUserContext();
-	const navigate = useNavigate();
+	const { loading } = useUserContext();
+	const [open, setOpen] = useState(false);
+	const theme = useTheme();
+	const isSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-	const handleSignOut = useCallback(async () => {
-		await signOut();
-		navigate('/login');
-	}, []);
+	const handleOpen = useCallback(() => setOpen(true), []);
+	const handleClose = useCallback(() => setOpen(false), []);
 
 	if (loading) {
 		return (
@@ -55,55 +59,34 @@ const Layout: FC = ({ children }) => {
 				}}
 			>
 				<Container>
-					<Toolbar disableGutters sx={{ gap: 2 }}>
+					<Toolbar disableGutters sx={{ gap: 2, color: 'white' }}>
 						<Button component={Link} to="/">
 							<img src={logo} alt="logo" height="40" width="40" />
 						</Button>
-						<Button
-							component={Link}
-							to="/search"
-							sx={{ color: 'white', width: '10rem' }}
-						>
-							Find location
-						</Button>
-						{user && (
-							<Button
-								component={Link}
-								to="/my-locations"
-								sx={{ color: 'white', width: '10rem' }}
-							>
-								My locations
-							</Button>
-						)}
-						<Box sx={{ flexGrow: 1 }} />
-						{user ? (
+						{isSM ? (
 							<>
-								{userData?.userName ? (
-									<Button
-										component={Link}
-										to="/settings"
-										sx={{ color: 'white' }}
-										endIcon={<SettingsIcon />}
+								<IconButton
+									sx={{ ml: 'auto', color: 'inherit' }}
+									onClick={handleOpen}
+								>
+									<MenuIcon />
+								</IconButton>
+								<Drawer open={open} anchor="right" onClose={handleClose}>
+									<Box
+										sx={{
+											color: 'primary.main',
+											display: 'flex',
+											flexDirection: 'column',
+											height: '100%',
+											py: 1
+										}}
 									>
-										{userData.userName}
-									</Button>
-								) : (
-									<IconButton
-										component={Link}
-										to="/settings"
-										sx={{ color: 'white' }}
-									>
-										<SettingsIcon />
-									</IconButton>
-								)}
-								<Button onClick={handleSignOut} sx={{ color: 'white' }}>
-									Logout
-								</Button>
+										<Navigation onClick={handleClose} />
+									</Box>
+								</Drawer>
 							</>
 						) : (
-							<Button component={Link} to="/login" sx={{ color: 'white' }}>
-								Login
-							</Button>
+							<Navigation />
 						)}
 					</Toolbar>
 				</Container>
