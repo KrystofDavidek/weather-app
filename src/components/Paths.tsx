@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import useUserContext from '../hooks/useUserContext';
 import {
-	Home,
+	Search,
 	MyLocations,
 	Login,
 	Forecast,
@@ -16,8 +16,8 @@ const Paths = () => {
 
 	return (
 		<Routes>
-			<Route path="/" element={<Home />} />
-			<Route path="/:paramLocation" element={<Home />} />
+			<Route path="/search" element={<Search />} />
+			<Route path="/search/:paramLocation" element={<Search />} />
 			{user ? (
 				<>
 					<Route path="/my-locations" element={<MyLocations />} />
@@ -27,7 +27,7 @@ const Paths = () => {
 				<Route path="/login" element={<Login />} />
 			)}
 			<Route path="/forecast/:query" element={<Forecast />} />
-			<Route path="/welcome" element={<Welcome />} />
+			<Route path="/" element={<Welcome />} />
 			<Route element={<NotFound />} />
 		</Routes>
 	);

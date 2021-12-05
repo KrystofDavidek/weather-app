@@ -60,7 +60,7 @@ const Welcome = () => {
 						<Button
 							variant="contained"
 							component={Link}
-							to="/"
+							to="/search"
 							sx={{
 								mt: '3rem',
 								alignSelf: 'center',

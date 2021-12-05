@@ -10,7 +10,7 @@ import useCurrentPosition from '../hooks/useCurrentPosition';
 import { useSnackbar } from '../hooks/useSnackbarContext';
 import Searchbar from '../components/Searchbar';
 
-const Home = () => {
+const Search = () => {
 	const { showSnackbar } = useSnackbar();
 	const { position } = useCurrentPosition();
 	const navigate = useNavigate();
@@ -32,20 +32,20 @@ const Home = () => {
 		}
 	);
 
-	const search = (input: string, isfromGps?: boolean) => {
+	const handleSearch = (input: string, isfromGps?: boolean) => {
 		if (isfromGps) {
 			if (position.latitude !== 0 && position.longitude !== 0) {
-				navigate(`/${position.latitude},${position.longitude}`);
+				navigate(`/search/${position.latitude},${position.longitude}`);
 			} else {
 				handleError('Cannot fetch GPS data, try again');
 			}
 		} else {
-			navigate(`/${input}`);
+			navigate(`/search/${input}`);
 		}
 	};
 
 	const close = () => {
-		navigate('/');
+		navigate('/search');
 	};
 
 	return (
@@ -60,11 +60,11 @@ const Home = () => {
 					width: '100%'
 				}}
 			>
-				<Searchbar onSearch={search} onClose={close} />
+				<Searchbar onSearch={handleSearch} onClose={close} />
 				{data && <WeatherCard data={data} />}
 			</Box>
 		</Zoom>
 	);
 };
 
-export default Home;
+export default Search;

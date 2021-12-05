@@ -1,19 +1,30 @@
-import { createContext, FC, useContext, useEffect, useState } from 'react';
+import {
+	createContext,
+	FC,
+	useContext,
+	useEffect,
+	useMemo,
+	useState
+} from 'react';
 import { User } from 'firebase/auth';
 import { onSnapshot } from 'firebase/firestore';
 
 import { onAuthChanged, UserData, userDataDocument } from '../utils/firebase';
 
-type UserContextType = { user?: User; userData?: UserData };
+type UserContextType = { user?: User; userData?: UserData; loading: boolean };
 
 const UserContext = createContext<UserContextType>(undefined as never);
 
 export const UserProvider: FC = ({ children }) => {
+	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState<User>();
 	const [userData, setUserData] = useState<UserData>();
 
 	useEffect(() => {
-		onAuthChanged(u => setUser(u ?? undefined));
+		onAuthChanged(u => {
+			setUser(u ?? undefined);
+			setLoading(false);
+		});
 	}, []);
 
 	useEffect(() => {
@@ -30,10 +41,17 @@ export const UserProvider: FC = ({ children }) => {
 		};
 	}, [user?.email]);
 
+	const UserCtx = useMemo(
+		() => ({
+			user,
+			userData,
+			loading
+		}),
+		[user, userData, loading]
+	);
+
 	return (
-		<UserContext.Provider value={{ user, userData }}>
-			{children}
-		</UserContext.Provider>
+		<UserContext.Provider value={UserCtx}>{children}</UserContext.Provider>
 	);
 };
 
