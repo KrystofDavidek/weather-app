@@ -1,14 +1,13 @@
 import { FormControl, TextField, Typography } from '@mui/material';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent } from 'react';
 
 type Props = {
 	current: string | undefined;
+	value: string;
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-const UsernameSetter = ({ current, onChange }: Props) => {
-	const [username, setUsername] = useState(current);
-
+const UsernameSetter = ({ current, value, onChange }: Props) => {
 	const currentNickname = current ? `Currently: ${current}` : 'No nickname yet';
 
 	return (
@@ -25,12 +24,8 @@ const UsernameSetter = ({ current, onChange }: Props) => {
 			<TextField
 				id="username"
 				name="userName"
-				value={username}
-				onChange={useCallback((e: ChangeEvent<HTMLInputElement>) => {
-					e.preventDefault();
-					setUsername(e.target.value);
-					onChange(e);
-				}, [])}
+				value={value}
+				onChange={onChange}
 				helperText={currentNickname}
 				type="text"
 			/>

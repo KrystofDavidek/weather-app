@@ -8,6 +8,7 @@ import NavigationIcon from '@mui/icons-material/Navigation';
 import CompressIcon from '@mui/icons-material/Compress';
 
 import { CurrentWeatherType } from '../../models/weather';
+import { useUnits } from '../../hooks/useUnits';
 
 import { WeatherInfoItem } from './WeatherInfoItem';
 
@@ -16,7 +17,9 @@ type Props = {
 };
 
 export const WeatherInfo = ({ data }: Props) => {
+	const { temp, wind } = useUnits();
 	const { location, current } = data;
+
 	return (
 		<Box>
 			<Grid container alignItems="center">
@@ -35,7 +38,7 @@ export const WeatherInfo = ({ data }: Props) => {
 					<WeatherInfoItem
 						Icon={<DeviceThermostatIcon color="primary" />}
 						label="temperature"
-						content={`${current.temp_c}°`}
+						content={`${current[temp.key]}${temp.unit}`}
 					/>
 					<WeatherInfoItem
 						Icon={<OpacityIcon color="primary" />}
@@ -45,7 +48,7 @@ export const WeatherInfo = ({ data }: Props) => {
 					<WeatherInfoItem
 						Icon={<AirIcon color="primary" />}
 						label="wind speed"
-						content={`${current.wind_kph} kmph`}
+						content={`${current[wind.key]} ${wind.unit}`}
 					/>
 				</Grid>
 				<Grid item xs={12} sm={5} md={4} lg={5}>

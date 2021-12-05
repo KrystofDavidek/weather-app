@@ -14,7 +14,6 @@ import {
 import { useParams } from 'react-router';
 import useSWR from 'swr';
 import { format, addDays } from 'date-fns';
-import { grey } from '@mui/material/colors';
 
 import PageTitle from '../components/PageTitle';
 import ForecastCard from '../components/ForecastCard';
@@ -58,10 +57,6 @@ const Forecast = () => {
 		return <Typography align="center">Something went wrong...</Typography>;
 	}
 
-	if (!data) {
-		return <LinearProgress />;
-	}
-
 	const handleChange = (event: SelectChangeEvent<DayOptionValues>) => {
 		event.preventDefault();
 		setDay(event.target.value as DayOptionValues);
@@ -84,17 +79,11 @@ const Forecast = () => {
 						justifyContent="space-between"
 					>
 						<Grid item>
-							<Typography
-								variant="h3"
-								color={grey}
-								sx={{
-									mr: '1rem',
-									fontSize: 32,
-									fontWeight: 500
-								}}
-							>
-								{data.location.name}
-							</Typography>
+							{data && (
+								<Typography variant="h4">
+									{`${data.location.name}, ${data.location.country}`}
+								</Typography>
+							)}
 						</Grid>
 
 						<Grid item>
@@ -118,9 +107,15 @@ const Forecast = () => {
 					</Grid>
 				</Slide>
 			</Grid>
-			{data.forecast.forecastday[0]?.hour.map(data => (
-				<ForecastCard key={data.time_epoch} data={data} />
-			))}
+			{!data ? (
+				<Box sx={{ mt: 5 }}>
+					<LinearProgress />
+				</Box>
+			) : (
+				data.forecast.forecastday[0]?.hour.map(data => (
+					<ForecastCard key={data.time_epoch} data={data} />
+				))
+			)}
 		</Box>
 	);
 };

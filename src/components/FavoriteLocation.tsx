@@ -2,14 +2,15 @@ import { useCallback, useState } from 'react';
 import useSWR from 'swr';
 import {
 	Box,
-	CircularProgress,
+	LinearProgress,
 	Paper,
 	Grid,
 	Typography,
 	Collapse,
 	Grow,
 	IconButton,
-	Divider
+	Divider,
+	Tooltip
 } from '@mui/material';
 import {
 	DragIndicator,
@@ -19,9 +20,13 @@ import {
 	Place
 } from '@mui/icons-material';
 import { DraggableProvidedDragHandleProps } from 'react-beautiful-dnd';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { fetcher } from '../utils/fetcher';
 import { CurrentWeatherType } from '../models/weather';
+import { useDialog } from '../hooks/useDialogContext';
+import { DeleteLocationDialog } from '../components/Dialogs/DeleteLocationDialog';
 
 import { WeatherInfo } from './WeatherInfo/WeatherInfo';
 
@@ -31,7 +36,20 @@ type Props = {
 };
 
 export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
+	const theme = useTheme();
+	const { openDialog } = useDialog();
 	const [open, setOpen] = useState(false);
+	const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+
+	const handleOnDeleteClick = () => {
+		openDialog({
+			Content: DeleteLocationDialog,
+			props: {
+				location
+			}
+		});
+	};
+
 	const { data } = useSWR<CurrentWeatherType>(
 		location
 			? `current.json?key=${process.env.REACT_APP_API_KEY}&q=${location}&aqi=no`
@@ -43,7 +61,11 @@ export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
 	const toggleMenu = useCallback(() => setOpen(previous => !previous), []);
 
 	if (!data) {
-		return <CircularProgress />;
+		return (
+			<Box sx={{ p: 2 }}>
+				<LinearProgress />
+			</Box>
+		);
 	}
 
 	return (
@@ -68,7 +90,7 @@ export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
 					<Typography sx={{ fontWeight: 500 }}>{data.location.name}</Typography>
 				</Grid>
 				<Grid item xs>
-					<Grow in={!open}>
+					<Grow in={!open && !isSm}>
 						<Grid
 							container
 							alignItems="center"
@@ -97,13 +119,11 @@ export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
 					</IconButton>
 				</Grid>
 				<Grid item xs="auto">
-					<IconButton
-						onClick={() => {
-							console.log('clicked');
-						}}
-					>
-						<Delete />
-					</IconButton>
+					<Tooltip title="Remove location from favorites" placement="top">
+						<IconButton onClick={handleOnDeleteClick}>
+							<Delete sx={{ color: 'red' }} />
+						</IconButton>
+					</Tooltip>
 				</Grid>
 			</Grid>
 			<Collapse in={open}>

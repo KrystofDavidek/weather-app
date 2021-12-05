@@ -13,13 +13,14 @@ import {
 } from '@mui/material';
 import { FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { StarOutline, Star, DragIndicator } from '@mui/icons-material';
+import { StarOutline, Star } from '@mui/icons-material';
 import { arrayUnion, arrayRemove, updateDoc } from 'firebase/firestore';
 import { grey } from '@mui/material/colors';
 
 import useUserContext from '../hooks/useUserContext';
 import { userDataDocument } from '../utils/firebase';
 import { CurrentWeatherType } from '../models/weather';
+import { useUnits } from '../hooks/useUnits';
 
 import LabeledItem from './LabeledItem';
 
@@ -29,6 +30,7 @@ type WeatherProps = {
 
 const WeatherCard: FC<WeatherProps> = ({ data }) => {
 	const { user, userData } = useUserContext();
+	const { temp, wind, feelslike } = useUnits();
 	const activeStar = useMemo(
 		() => userData?.locations.includes(data.location.name),
 		[userData, data.location.name]
@@ -60,10 +62,7 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
 					borderWidth: 2
 				}}
 			>
-				<Box sx={{ display: 'flex', justifyContent: 'space-between', p: 1 }}>
-					<Box sx={{ display: 'grid', placeItems: 'center' }}>
-						<DragIndicator sx={{ color: 'primary.main', cursor: 'pointer' }} />
-					</Box>
+				<Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
 					{user && (
 						<Tooltip
 							title={activeStar ? 'Remove from favorites' : 'Add to favorites'}
@@ -113,11 +112,12 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
 
 						<Grid item xs={6} sx={{ display: 'flex', flexDirection: 'column' }}>
 							<Typography variant="h3" component="span" sx={{ my: '0.5rem' }}>
-								{data.current.temp_c}°
+								{data.current[temp.key]}
+								{temp.unit}
 							</Typography>
 							<LabeledItem
 								label="Feels like"
-								content={`${data.current.feelslike_c}°`}
+								content={`${data.current[feelslike.key]}${feelslike.unit}`}
 							/>
 							<LabeledItem
 								label="Humidity"
@@ -129,7 +129,7 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
 							/>
 							<LabeledItem
 								label="Wind speed"
-								content={`${data.current.wind_kph} kph`}
+								content={`${data.current[wind.key]} ${wind.unit}`}
 							/>
 						</Grid>
 

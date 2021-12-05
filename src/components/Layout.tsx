@@ -62,23 +62,24 @@ const Layout: FC = ({ children }) => {
 						<Box sx={{ flexGrow: 1 }} />
 						{user ? (
 							<>
-								<IconButton
-									disableFocusRipple
-									component={Link}
-									to="/settings"
-									sx={{ color: 'white' }}
-								>
-									{userData?.userName && (
-										<Button
-											disableFocusRipple
-											disableRipple
-											sx={{ color: 'white' }}
-										>
-											{userData?.userName}
-										</Button>
-									)}
-									<SettingsIcon />
-								</IconButton>
+								{userData?.userName ? (
+									<Button
+										component={Link}
+										to="/settings"
+										sx={{ color: 'white' }}
+										endIcon={<SettingsIcon />}
+									>
+										{userData.userName}
+									</Button>
+								) : (
+									<IconButton
+										component={Link}
+										to="/settings"
+										sx={{ color: 'white' }}
+									>
+										<SettingsIcon />
+									</IconButton>
+								)}
 								<Button onClick={handleSignOut} sx={{ color: 'white' }}>
 									Logout
 								</Button>
