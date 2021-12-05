@@ -90,7 +90,7 @@ export const FavoriteLocation = ({ location, dragHandleProps }: Props) => {
 					<Typography sx={{ fontWeight: 500 }}>{data.location.name}</Typography>
 				</Grid>
 				<Grid item xs>
-					<Grow in={!open && !isSm}>
+					<Grow in={!open && !isSm} unmountOnExit>
 						<Grid
 							container
 							alignItems="center"
