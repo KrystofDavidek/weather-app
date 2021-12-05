@@ -2,8 +2,6 @@
 
 This project is a lightweight React web app implemented as the final project of the PV247 course at FI MUNI.
 
-![](https://github.com/Sedoriko/weather-app/blob/main/src/assets/images/logo.png | width=100)
-
 ## About
 
 The app's main purpose is to provide weather information. It can show the current weather for your **current location**, as well as for the **user-defined location**. There is an option to show the **three-day hourly forecast** for the selected location. It can be accessed after selecting the location on `Find location` page. This functionality is supported for all users. Registered and logged-in users can mark the **locations as favourites** and they have access to them on a separate page `My locations`. These users are also allowed to change the **temperature and speed units** (metric system by default), as well as the **user nickname** (default user name is their e-mail). 
