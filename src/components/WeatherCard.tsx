@@ -62,22 +62,26 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
 					borderWidth: 2
 				}}
 			>
-				<Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
-					{user && (
-						<Tooltip
-							title={activeStar ? 'Remove from favorites' : 'Add to favorites'}
-						>
-							<IconButton onClick={handleClick}>
-								{activeStar ? (
-									<Star sx={{ color: 'primary.main' }} />
-								) : (
-									<StarOutline sx={{ color: 'primary.main' }} />
-								)}
-							</IconButton>
-						</Tooltip>
-					)}
-				</Box>
-				<Divider />
+				{user && (
+					<>
+						<Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
+							<Tooltip
+								title={
+									activeStar ? 'Remove from favorites' : 'Add to favorites'
+								}
+							>
+								<IconButton onClick={handleClick}>
+									{activeStar ? (
+										<Star sx={{ color: 'primary.main' }} />
+									) : (
+										<StarOutline sx={{ color: 'primary.main' }} />
+									)}
+								</IconButton>
+							</Tooltip>
+						</Box>
+						<Divider />
+					</>
+				)}
 				<CardContent>
 					<Grid container>
 						<Grid

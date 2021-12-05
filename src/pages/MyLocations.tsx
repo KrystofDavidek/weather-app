@@ -93,7 +93,7 @@ const MyLocations = () => {
 						</Typography>
 						<Typography variant="h6">
 							Go{' '}
-							<NavLink to="/">
+							<NavLink to="/search">
 								<Typography component="span" variant="h6">
 									here
 								</Typography>

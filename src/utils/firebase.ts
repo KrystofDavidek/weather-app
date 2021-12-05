@@ -5,7 +5,8 @@ import {
 	signInWithEmailAndPassword,
 	signOut as authSignOut,
 	onAuthStateChanged,
-	User
+	User,
+	NextOrObserver
 } from 'firebase/auth';
 import {
 	collection,
@@ -49,7 +50,7 @@ export const logIn = (email: string, password: string) =>
 export const signOut = () => authSignOut(auth);
 
 // Subscribe to auth state changes
-export const onAuthChanged = (callback: (u: User | null) => void) =>
+export const onAuthChanged = (callback: NextOrObserver<User>) =>
 	onAuthStateChanged(auth, callback);
 
 // Firestore database

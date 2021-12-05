@@ -7,7 +7,8 @@ import {
 	Button,
 	Box,
 	IconButton,
-	Typography
+	Typography,
+	CircularProgress
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
@@ -16,13 +17,28 @@ import useUserContext from '../hooks/useUserContext';
 import { signOut } from '../utils/firebase';
 
 const Layout: FC = ({ children }) => {
-	const { user, userData } = useUserContext();
+	const { user, loading, userData } = useUserContext();
 	const navigate = useNavigate();
 
 	const handleSignOut = useCallback(async () => {
 		await signOut();
 		navigate('/login');
 	}, []);
+
+	if (loading) {
+		return (
+			<Box
+				sx={{
+					height: '100vh',
+					width: '100vw',
+					display: 'grid',
+					placeItems: 'center'
+				}}
+			>
+				<CircularProgress size={75} />
+			</Box>
+		);
+	}
 
 	return (
 		<Box
@@ -40,12 +56,12 @@ const Layout: FC = ({ children }) => {
 			>
 				<Container>
 					<Toolbar disableGutters sx={{ gap: 2 }}>
-						<Button component={Link} to="/welcome">
+						<Button component={Link} to="/">
 							<img src={logo} alt="logo" height="40" width="40" />
 						</Button>
 						<Button
 							component={Link}
-							to="/"
+							to="/search"
 							sx={{ color: 'white', width: '10rem' }}
 						>
 							Find location
